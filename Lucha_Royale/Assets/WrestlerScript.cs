@@ -5,7 +5,9 @@ using UnityEngine;
 public class WrestlerScript : MonoBehaviour
 {
     public Animator animator;
-    
+    float damage = 1.0f;
+    bool punch = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,11 +53,32 @@ public class WrestlerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             animator.SetBool("isPunching", true);
+            gameObject.layer = 3;
+            punch = true;
+
         }
 
         if (Input.GetKeyUp(KeyCode.R))
         {
             animator.SetBool("isPunching", false);
+            gameObject.layer = 0;
+            punch = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!punch)
+        {
+            if(collision.transform.position.x > transform.position.x)
+            {
+                transform.position -= Vector3.right * damage * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += Vector3.right * damage * Time.deltaTime;
+            }
+            damage += 0.5f;
         }
     }
 }
