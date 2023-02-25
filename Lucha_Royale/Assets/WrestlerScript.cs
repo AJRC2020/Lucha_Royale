@@ -5,8 +5,15 @@ using UnityEngine;
 public class WrestlerScript : MonoBehaviour
 {
     public Animator animator;
+    public float power = 2.0f;
     float damage = 1.0f;
     bool punch = false;
+    bool wings = false;
+    float timer_wings = 0.0f;
+    float wings_duration = 6.0f;
+    float speed = 3.0f;
+    float hit = 0.5f;
+    float cheer_up = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,26 +26,41 @@ public class WrestlerScript : MonoBehaviour
     {
         var position = transform.position;
 
+        if (wings) 
+        {
+            if (timer_wings < wings_duration)
+            {
+                timer_wings += Time.deltaTime;
+            }
+            else
+            {
+                timer_wings = 0.0f;
+                speed = 3.0f;
+                gameObject.layer = 0;
+                wings = false;
+            }
+        }
+
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += Vector3.up * 3 * Time.deltaTime;
+            transform.position += Vector3.up * speed * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position -= Vector3.right * 3 * Time.deltaTime;
+            transform.position -= Vector3.right * speed * Time.deltaTime;
             animator.SetBool("isLeft", true);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.right * 3 * Time.deltaTime;
+            transform.position += Vector3.right * speed * Time.deltaTime;
             animator.SetBool("isLeft", false);
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position -= Vector3.up * 3 * Time.deltaTime;
+            transform.position -= Vector3.up * speed * Time.deltaTime;
         }
 
         if (position.x - transform.position.x == 0 && position.y - transform.position.y == 0)
@@ -78,7 +100,37 @@ public class WrestlerScript : MonoBehaviour
             {
                 transform.position += Vector3.right * damage * Time.deltaTime;
             }
-            damage += 0.5f;
+            damage += hit;
         }
+
+        if (collision.gameObject.layer == 6)
+        {
+            wing_up();
+        }
+
+        if (collision.gameObject.layer == 7)
+        {
+            into_veins();
+        }
+
+        if (collision.gameObject.layer == 8)
+        {
+            cheer_up += 0.1f;
+        }
+    }
+
+    private void wing_up()
+    {
+        gameObject.layer = 1;
+        speed = 5.0f;
+        timer_wings = 0.0f;
+        wings = true;
+    }
+
+    private void into_veins()
+    {
+        hit /= 2;
+        damage /= 2;
+        power *= 2;
     }
 }

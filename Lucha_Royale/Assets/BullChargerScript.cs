@@ -8,11 +8,12 @@ public class BullChargerScript : MonoBehaviour
     bool gotPunched = false;
     float speed = 0.5f;
     public GameObject luchador;
+    public WrestlerScript wrestler;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        wrestler = luchador.GetComponent<WrestlerScript>();
     }
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class BullChargerScript : MonoBehaviour
     {
         if (transform.position.x > 10 || transform.position.x < -10)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         var final_pos = luchador.transform.position;
@@ -69,7 +70,7 @@ public class BullChargerScript : MonoBehaviour
             {
                 transform.position += Vector3.right * damage * Time.deltaTime;
             }
-            damage += 2.5f;
+            damage += wrestler.power;
 
             gotPunched = true;
         }
