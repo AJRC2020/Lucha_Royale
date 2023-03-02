@@ -12,6 +12,7 @@ public class WrestlerScript : MonoBehaviour
     public float cheer_up = 0.0f;
     bool punch = false;
     bool wings = false;
+    bool weapon = false;
     float timer_wings = 0.0f;
     float wings_duration = 6.0f;
     float speed = 3.0f;
@@ -40,6 +41,9 @@ public class WrestlerScript : MonoBehaviour
                 gameObject.layer = 0;
                 wings = false;
             }
+        }
+        if(weapon){
+            animator.SetBool("isWeapon", true);
         }
 
         if (Input.GetKey(KeyCode.W))
