@@ -1,24 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WrestlerScript : MonoBehaviour
 {
     public Animator animator;
     public float power = 2.0f;
-    float damage = 1.0f;
+    public UIScript ui;
+    public float damage = 1.0f;
+    public float cheer_up = 0.0f;
     bool punch = false;
     bool wings = false;
     float timer_wings = 0.0f;
     float wings_duration = 6.0f;
     float speed = 3.0f;
     float hit = 0.5f;
-    float cheer_up = 0.0f;
-
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame
@@ -90,7 +91,7 @@ public class WrestlerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!punch)
+        if (!punch && collision.gameObject.layer == 0)
         {
             if(collision.transform.position.x > transform.position.x)
             {
@@ -131,6 +132,10 @@ public class WrestlerScript : MonoBehaviour
     {
         hit /= 2;
         damage /= 2;
+        if (damage < 1.0f)
+        {
+            damage = 1.0f;
+        }
         power *= 2;
     }
 }

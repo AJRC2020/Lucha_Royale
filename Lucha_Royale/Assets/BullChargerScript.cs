@@ -9,11 +9,16 @@ public class BullChargerScript : MonoBehaviour
     float speed = 0.5f;
     public GameObject luchador;
     public WrestlerScript wrestler;
+    public UIScript ui;
+    public EnemySpawner spawner;
     
     // Start is called before the first frame update
     void Start()
     {
+        luchador = GameObject.FindGameObjectWithTag("Luchador");
         wrestler = luchador.GetComponent<WrestlerScript>();
+        ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIScript>();
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
     }
 
     // Update is called once per frame
@@ -22,6 +27,8 @@ public class BullChargerScript : MonoBehaviour
         if (transform.position.x > 10 || transform.position.x < -10)
         {
             Destroy(gameObject);
+            ui.eliminated();
+            spawner.current_enemy--;
         }
 
         var final_pos = luchador.transform.position;
