@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject bullCharger;
+    public GameObject tankCharger;
     public int current_enemy = 0;
     float timer = 0.0f;
     float entrance_time = 3.0f;
@@ -31,7 +32,14 @@ public class EnemySpawner : MonoBehaviour
     private void spawn()
     {
         var position = new Vector3(9 - 18 * Random.Range(0, 2), Random.Range(-3f, 1.75f), 0);
-        Instantiate(bullCharger, position, gameObject.transform.rotation);
+        if (Random.value < 0.75)
+        {
+            Instantiate(bullCharger, position, gameObject.transform.rotation);
+        }
+        else
+        {
+            Instantiate(tankCharger, position, gameObject.transform.rotation);
+        }
         timer = 0.0f;
         current_enemy++;
     }

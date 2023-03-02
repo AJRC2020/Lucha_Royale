@@ -13,6 +13,7 @@ public class TankChargerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        luchador = GameObject.FindGameObjectWithTag("Luchador");
         wrestler = luchador.GetComponent<WrestlerScript>();
     }
 

@@ -20,7 +20,7 @@ public class WrestlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    
+
     }
 
     // Update is called once per frame
@@ -41,9 +41,6 @@ public class WrestlerScript : MonoBehaviour
                 gameObject.layer = 0;
                 wings = false;
             }
-        }
-        if(weapon){
-            animator.SetBool("isWeapon", true);
         }
 
         if (Input.GetKey(KeyCode.W))
@@ -121,6 +118,11 @@ public class WrestlerScript : MonoBehaviour
         if (collision.gameObject.layer == 8)
         {
             cheer_up += 0.1f;
+        }
+
+        if (collision.gameObject.layer == 9)
+        {
+            animator.SetBool("isWeapon", true);
         }
     }
 
