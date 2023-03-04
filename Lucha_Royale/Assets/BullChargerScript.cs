@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class BullChargerScript : MonoBehaviour
 {
-    float damage = 10.0f;
-    bool gotPunched = false;
-    float speed = 0.5f;
     public GameObject luchador;
     public WrestlerScript wrestler;
     public UIScript ui;
     public EnemySpawner spawner;
-    
+    float damage = 10.0f;
+    bool gotPunched = false;
+    float speed = 0.5f;
+    bool isStunned = false;
+    float timer = 0.0f;
+    float stunDuration = 1.0f;
+    bool burning = false;
+    float burningDuration = 2.0f;
+    float timerBurning = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,15 +37,53 @@ public class BullChargerScript : MonoBehaviour
             spawner.current_enemy--;
         }
 
-        var final_pos = luchador.transform.position;
-        var direction = final_pos - transform.position;
-        direction = Vector3.Normalize(direction);
-        transform.position += direction * speed * Time.deltaTime;
+        if (!isStunned)
+        {
+            var final_pos = luchador.transform.position;
+            var direction = final_pos - transform.position;
+            direction = Vector3.Normalize(direction);
+            transform.position += direction * speed * Time.deltaTime;
+        }
+        else
+        {
+            if (timer < stunDuration)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                isStunned = false;
+                timer = 0.0f;
+            }
+        }
+
+        if (burning)
+        {
+            if (timerBurning < burningDuration)
+            {
+                timer += Time.deltaTime;
+                damage += 0.5f * Time.deltaTime;
+            }
+            else
+            {
+                burning = false;
+                timer = 0.0f;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        gettingPunched(collision);
+        if (collision.gameObject.layer == 11 && !burning)
+        {
+            transform.position -= Vector3.right * damage / 2 * Time.deltaTime;
+            damage += 0.5f;
+            burning = true; ;
+        }
+        else
+        {
+            gettingPunched(collision);
+        }
 
         if (collision.gameObject.layer != 3 && gotPunched)
         {
@@ -69,15 +113,26 @@ public class BullChargerScript : MonoBehaviour
     {
         if (collision.gameObject.layer == 3 && !gotPunched)
         {
-            if (collision.transform.position.x > transform.position.x)
+            switch (wrestler.weapon)
             {
-                transform.position -= Vector3.right * damage * Time.deltaTime;
+                case 0:
+                    if (collision.transform.position.x > transform.position.x)
+                    {
+                        transform.position -= Vector3.right * damage * Time.deltaTime;
+                    }
+                    else
+                    {
+                        transform.position += Vector3.right * damage * Time.deltaTime;
+                    }
+                    damage += wrestler.power;
+                    break;
+
+                case 1:
+                    isStunned = true;
+                    damage += wrestler.power * 3.0f;
+                    wrestler.chair_hits--;
+                    break;
             }
-            else
-            {
-                transform.position += Vector3.right * damage * Time.deltaTime;
-            }
-            damage += wrestler.power;
 
             gotPunched = true;
         }

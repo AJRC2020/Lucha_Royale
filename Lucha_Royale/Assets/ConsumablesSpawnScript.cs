@@ -8,6 +8,7 @@ public class ConsumablesSpawnScript : MonoBehaviour
     public GameObject roids;
     public GameObject cheer;
     public GameObject chair;
+    public GameObject paper;
     
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,12 @@ public class ConsumablesSpawnScript : MonoBehaviour
         {
             var position2 = new Vector3(Random.Range(-7f, 7f), Random.Range(-3f, 1.75f), 0);
             Instantiate(chair, position2, transform.rotation);
+        }
+
+        if (Random.Range(0, 4000) > 3998)
+        {
+            var position2 = new Vector3(Random.Range(-7f, 7f), Random.Range(-3f, 1.75f), 0);
+            Instantiate(paper, position2, transform.rotation);
         }
     }
 }

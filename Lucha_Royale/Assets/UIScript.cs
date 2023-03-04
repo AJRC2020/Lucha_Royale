@@ -8,6 +8,7 @@ public class UIScript : MonoBehaviour
     public int enemiesLeft = 30;
     public Text leftText;
     public Text damageText;
+    public Text pageText;
     public WrestlerScript luchador;
     public Image progressBar;
 
@@ -15,6 +16,7 @@ public class UIScript : MonoBehaviour
     {
         updateDamageText();
         updateProgressBar();
+        updatePaperCount();
     }
 
     [ContextMenu("Eliminate Enemy")]
@@ -34,6 +36,12 @@ public class UIScript : MonoBehaviour
     public void updateProgressBar()
     {
         progressBar.fillAmount = luchador.cheer_up;
+    }
+
+    [ContextMenu("Papers Please")]
+    public void updatePaperCount()
+    {
+        pageText.text = "X " + luchador.paper_count.ToString();
     }
 }
 

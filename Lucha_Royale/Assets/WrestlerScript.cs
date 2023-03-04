@@ -6,13 +6,17 @@ using UnityEngine.UI;
 public class WrestlerScript : MonoBehaviour
 {
     public Animator animator;
+    public GameObject fireBall;
     public float power = 2.0f;
     public UIScript ui;
     public float damage = 1.0f;
     public float cheer_up = 0.0f;
+    public int weapon = 0;
+    public int chair_hits = 4;
+    public int paper_count = 0;
+    public bool isLeft = false;
     bool punch = false;
     bool wings = false;
-    bool weapon = false;
     float timer_wings = 0.0f;
     float wings_duration = 6.0f;
     float speed = 3.0f;
@@ -52,12 +56,14 @@ public class WrestlerScript : MonoBehaviour
         {
             transform.position -= Vector3.right * speed * Time.deltaTime;
             animator.SetBool("isLeft", true);
+            isLeft = true;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
             transform.position += Vector3.right * speed * Time.deltaTime;
             animator.SetBool("isLeft", false);
+            isLeft = false;
         }
 
         if (Input.GetKey(KeyCode.S))
@@ -74,6 +80,22 @@ public class WrestlerScript : MonoBehaviour
             animator.SetFloat("Speed", 1);
         }
 
+        if (Input.GetKeyDown(KeyCode.E) && paper_count > 0)
+        {
+            var initial = gameObject.transform.position;
+            if (isLeft)
+            {
+                position = new Vector3(initial.x - 1.5f, initial.y, 0.0f);
+            }
+            else
+            {
+                position = new Vector3(initial.x + 1.5f, initial.y, 0.0f);
+            }
+            animator.SetBool("isPunching", true);
+            Instantiate(fireBall, position, gameObject.transform.rotation);
+            paper_count--;
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             animator.SetBool("isPunching", true);
@@ -82,7 +104,7 @@ public class WrestlerScript : MonoBehaviour
 
         }
 
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R) || Input.GetKeyUp(KeyCode.E))
         {
             animator.SetBool("isPunching", false);
             gameObject.layer = 0;
@@ -123,6 +145,13 @@ public class WrestlerScript : MonoBehaviour
         if (collision.gameObject.layer == 9)
         {
             animator.SetBool("isWeapon", true);
+            weapon = 1;
+            chair_hits = 4;
+        }
+
+        if (collision.gameObject.layer == 10)
+        {
+            paper_count++;
         }
     }
 
