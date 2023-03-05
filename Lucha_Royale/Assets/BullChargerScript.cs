@@ -76,9 +76,28 @@ public class BullChargerScript : MonoBehaviour
     {
         if (collision.gameObject.layer == 11 && !burning)
         {
-            transform.position -= Vector3.right * damage / 2 * Time.deltaTime;
+            if (collision.transform.position.x > transform.position.x)
+            {
+                transform.position -= Vector3.right * damage / 2 * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += Vector3.right * damage / 2 * Time.deltaTime;
+            }
             damage += 0.5f;
             burning = true; ;
+        }
+        else if(collision.gameObject.layer == 12)
+        {
+            if (collision.transform.position.x > transform.position.x)
+            {
+                transform.position -= Vector3.right * damage * 100 * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += Vector3.right * damage * 100 * Time.deltaTime;
+            }
+            damage += 100.0f;
         }
         else
         {

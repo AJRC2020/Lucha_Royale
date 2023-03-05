@@ -11,12 +11,25 @@ public class UIScript : MonoBehaviour
     public Text pageText;
     public WrestlerScript luchador;
     public Image progressBar;
+    public Text hitText;
+    public Image chair;
+    bool chairExists = false;
+
+    void Start()
+    {
+        chair.enabled = false;
+        hitText.enabled = false;
+    }
 
     private void Update()
     {
         updateDamageText();
         updateProgressBar();
         updatePaperCount();
+        if (chairExists)
+        {
+            updateChairCount();
+        }
     }
 
     [ContextMenu("Eliminate Enemy")]
@@ -42,6 +55,26 @@ public class UIScript : MonoBehaviour
     public void updatePaperCount()
     {
         pageText.text = "X " + luchador.paper_count.ToString();
+    }
+
+    [ContextMenu("Chairshot")]
+    public void updateChairCount()
+    {
+        hitText.text = "X " + luchador.chair_hits.ToString();
+    }
+
+    public void enableChair()
+    {
+        chair.enabled = true;
+        chairExists = true;
+        hitText.enabled = true;
+    }
+
+    public void disableChair()
+    {
+        chair.enabled = false;
+        chairExists = false;
+        hitText.enabled = false; ;
     }
 }
 

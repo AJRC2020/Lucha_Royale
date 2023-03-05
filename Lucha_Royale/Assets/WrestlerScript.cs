@@ -15,16 +15,19 @@ public class WrestlerScript : MonoBehaviour
     public int chair_hits = 4;
     public int paper_count = 0;
     public bool isLeft = false;
+    public bool isFlying = false;
     bool punch = false;
     bool wings = false;
     float timer_wings = 0.0f;
     float wings_duration = 6.0f;
+    float timer_finisher = 0.0f;
+    float finisher_duration = 0.915f;
     float speed = 3.0f;
     float hit = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
-
+        animator.applyRootMotion = true;
     }
 
     // Update is called once per frame
@@ -44,6 +47,22 @@ public class WrestlerScript : MonoBehaviour
                 speed = 3.0f;
                 gameObject.layer = 0;
                 wings = false;
+            }
+        }
+
+        if (isFlying)
+        {
+            if (timer_finisher < finisher_duration)
+            {
+                timer_finisher += Time.deltaTime;
+            }
+            else
+            {
+                timer_finisher = 0.0f;
+                gameObject.layer = 0;
+                isFlying = false;
+                animator.SetBool("isFlying", false);
+                animator.applyRootMotion = true;
             }
         }
 
@@ -104,11 +123,26 @@ public class WrestlerScript : MonoBehaviour
 
         }
 
+        if (Input.GetKeyDown(KeyCode.Q) && cheer_up == 1.0f)
+        {
+            animator.applyRootMotion = false;
+            animator.SetBool("isFlying", true);
+            isFlying = true;
+            gameObject.layer = 12;
+            cheer_up = 0.0f;
+        }
+
         if (Input.GetKeyUp(KeyCode.R) || Input.GetKeyUp(KeyCode.E))
         {
             animator.SetBool("isPunching", false);
             gameObject.layer = 0;
             punch = false;
+        }
+
+        if (weapon == 1 && chair_hits == 0) {
+            weapon = 0;
+            animator.SetBool("isWeapon", false);
+            ui.disableChair();
         }
     }
 
@@ -116,7 +150,7 @@ public class WrestlerScript : MonoBehaviour
     {
         if (!punch && collision.gameObject.layer == 0)
         {
-            if(collision.transform.position.x > transform.position.x)
+            if (collision.transform.position.x > transform.position.x)
             {
                 transform.position -= Vector3.right * damage * Time.deltaTime;
             }
@@ -127,31 +161,38 @@ public class WrestlerScript : MonoBehaviour
             damage += hit;
         }
 
-        if (collision.gameObject.layer == 6)
-        {
-            wing_up();
-        }
+        if (!isFlying) { 
+            if (collision.gameObject.layer == 6)
+            {
+                wing_up();
+            }
 
-        if (collision.gameObject.layer == 7)
-        {
-            into_veins();
-        }
+            if (collision.gameObject.layer == 7)
+            {
+                into_veins();
+            }
 
-        if (collision.gameObject.layer == 8)
-        {
-            cheer_up += 0.1f;
-        }
+            if (collision.gameObject.layer == 8)
+            {
+                cheer_up += 0.1f;
+                if (cheer_up > 1.0f)
+                {
+                    cheer_up = 1.0f;
+                }
+            }
 
-        if (collision.gameObject.layer == 9)
-        {
-            animator.SetBool("isWeapon", true);
-            weapon = 1;
-            chair_hits = 4;
-        }
+            if (collision.gameObject.layer == 9)
+            {
+                animator.SetBool("isWeapon", true);
+                weapon = 1;
+                chair_hits = 4;
+                ui.enableChair();
+            }
 
-        if (collision.gameObject.layer == 10)
-        {
-            paper_count++;
+            if (collision.gameObject.layer == 10)
+            {
+                paper_count++;
+            }
         }
     }
 
