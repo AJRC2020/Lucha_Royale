@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2802125989422832302}
   - component: {fileID: 1893762987912230054}
   - component: {fileID: 6387054509221324012}
+  - component: {fileID: 6810674714095189925}
   m_Layer: 11
   m_Name: Fireball
   m_TagString: Untagged
@@ -125,3 +126,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   luchador: {fileID: 0}
+--- !u!50 &6810674714095189925
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351240770459112181}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

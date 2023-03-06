@@ -125,5 +125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   luchador: {fileID: 0}
+  burningEffect: {fileID: 4777374988296359527, guid: e463a093a222fd04195e46bc86e69a93, type: 3}
+  stunEffect: {fileID: 796288356464574242, guid: 23eba4156b3e43b44a9c6e88eadd5a3f, type: 3}
   wrestler: {fileID: 0}
   ui: {fileID: 0}
+  spawner: {fileID: 0}

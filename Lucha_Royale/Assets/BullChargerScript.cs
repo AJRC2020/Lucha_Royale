@@ -5,6 +5,8 @@ using UnityEngine;
 public class BullChargerScript : MonoBehaviour
 {
     public GameObject luchador;
+    public GameObject burningEffect;
+    public GameObject stunEffect;
     public WrestlerScript wrestler;
     public UIScript ui;
     public EnemySpawner spawner;
@@ -17,6 +19,8 @@ public class BullChargerScript : MonoBehaviour
     bool burning = false;
     float burningDuration = 2.0f;
     float timerBurning = 0.0f;
+    GameObject currentBurn;
+    GameObject currentStun;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +58,7 @@ public class BullChargerScript : MonoBehaviour
             {
                 isStunned = false;
                 timer = 0.0f;
+                Destroy(currentStun);
             }
         }
 
@@ -61,13 +66,14 @@ public class BullChargerScript : MonoBehaviour
         {
             if (timerBurning < burningDuration)
             {
-                timer += Time.deltaTime;
+                timerBurning += Time.deltaTime;
                 damage += 0.5f * Time.deltaTime;
             }
             else
             {
                 burning = false;
                 timer = 0.0f;
+                Destroy(currentBurn);
             }
         }
     }
@@ -85,7 +91,8 @@ public class BullChargerScript : MonoBehaviour
                 transform.position += Vector3.right * damage / 2 * Time.deltaTime;
             }
             damage += 0.5f;
-            burning = true; ;
+            burning = true;
+            currentBurn = Instantiate(burningEffect, gameObject.transform.position, new Quaternion(-90, 0, 0, 0), gameObject.transform);
         }
         else if(collision.gameObject.layer == 12)
         {
@@ -150,6 +157,8 @@ public class BullChargerScript : MonoBehaviour
                     isStunned = true;
                     damage += wrestler.power * 3.0f;
                     wrestler.chair_hits--;
+                    var position = gameObject.transform.position + new Vector3(0, 0.5f, 0);
+                    currentStun = Instantiate(stunEffect, position, gameObject.transform.rotation);
                     break;
             }
 

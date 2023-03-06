@@ -6,6 +6,10 @@ public class TankChargerScript : MonoBehaviour
 {
     public GameObject luchador;
     public WrestlerScript wrestler;
+    public EnemySpawner spawner;
+    public UIScript ui;
+    public GameObject burningEffect;
+    public GameObject stunEffect;
     float damage = 5.0f;
     bool gotPunched = false;
     float speed = 0.2f;
@@ -15,12 +19,16 @@ public class TankChargerScript : MonoBehaviour
     bool burning = false;
     float burningDuration = 2.0f;
     float timerBurning = 0.0f;
-    
+    GameObject currentBurn;
+    GameObject currentStun;
+
     // Start is called before the first frame update
     void Start()
     {
         luchador = GameObject.FindGameObjectWithTag("Luchador");
         wrestler = luchador.GetComponent<WrestlerScript>();
+        ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIScript>();
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
     }
 
     // Update is called once per frame
@@ -29,6 +37,8 @@ public class TankChargerScript : MonoBehaviour
         if (transform.position.x > 10 || transform.position.x < -10)
         {
             Destroy(gameObject);
+            ui.eliminated();
+            spawner.current_enemy--;
         }
 
         if (!isStunned)
@@ -48,6 +58,7 @@ public class TankChargerScript : MonoBehaviour
             {
                 isStunned = false;
                 timer = 0.0f;
+                Destroy(currentStun);
             }
         }
 
@@ -55,13 +66,14 @@ public class TankChargerScript : MonoBehaviour
         {
             if (timerBurning < burningDuration)
             {
-                timer += Time.deltaTime;
+                timerBurning += Time.deltaTime;
                 damage += 0.5f * Time.deltaTime;
             }
             else
             {
                 burning = false;
                 timer = 0.0f;
+                Destroy(currentBurn);
             }
         }
     }
@@ -79,7 +91,8 @@ public class TankChargerScript : MonoBehaviour
                 transform.position -= Vector3.right * damage / 2 * Time.deltaTime;
             }
             damage += 0.5f;
-            burning = true; ;
+            burning = true;
+            currentBurn = Instantiate(burningEffect, gameObject.transform.position, new Quaternion(-90, 0, 0, 0), gameObject.transform);
         }
         else if (collision.gameObject.layer == 12)
         {
@@ -144,6 +157,8 @@ public class TankChargerScript : MonoBehaviour
                     isStunned = true;
                     damage += wrestler.power * 3.0f;
                     wrestler.chair_hits--;
+                    var position = gameObject.transform.position + new Vector3(0, 1.5f, 0);
+                    currentStun = Instantiate(stunEffect, position, gameObject.transform.rotation);
                     break;
             }
 
