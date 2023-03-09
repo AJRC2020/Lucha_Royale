@@ -24,6 +24,8 @@ public class WrestlerScript : MonoBehaviour
     float wings_duration = 6.0f;
     float timer_finisher = 0.0f;
     float finisher_duration = 0.915f;
+    float timer_damaged = 0.0f;
+    float damaged_duration = 0.365f;
     float speed = 3.0f;
     float hit = 0.5f;
     // Start is called before the first frame update
@@ -69,8 +71,16 @@ public class WrestlerScript : MonoBehaviour
         }
 
         if (isDamaged){
-            isDamaged = false;
-            animator.SetBool("isDamaged", false);
+            if (timer_damaged < damaged_duration)
+            {
+                timer_damaged += Time.deltaTime;
+            }
+            else
+            {
+                isDamaged = false;
+                animator.SetBool("isDamaged", false);
+                timer_damaged = 0.0f;
+            }
         }
 
         if (Input.GetKey(KeyCode.W))
@@ -152,7 +162,7 @@ public class WrestlerScript : MonoBehaviour
             ui.disableChair();
         }
 
-        if (damage == 100.00){
+        if (transform.position.x > 10 || transform.position.x < -10){
             SceneManager.LoadScene("GameOver");
         }
     }
