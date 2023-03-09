@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4295651799250270262}
   - component: {fileID: 4295651799250270261}
   - component: {fileID: 4295651799250270260}
+  - component: {fileID: 7462858361602054290}
   m_Layer: 0
   m_Name: Enemy Type 2
   m_TagString: Untagged
@@ -130,3 +131,23 @@ MonoBehaviour:
   ui: {fileID: 0}
   burningEffect: {fileID: 4777374988296359527, guid: e463a093a222fd04195e46bc86e69a93, type: 3}
   stunEffect: {fileID: 796288356464574242, guid: 23eba4156b3e43b44a9c6e88eadd5a3f, type: 3}
+--- !u!95 &7462858361602054290
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4295651799250270265}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6cde01368c280344fab592cf9c1ebfb4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

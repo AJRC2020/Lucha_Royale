@@ -167,6 +167,7 @@ MonoBehaviour:
   paper_count: 0
   isLeft: 0
   isFlying: 0
+  isDamaged: 0
 --- !u!61 &10281607
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -851,7 +852,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Left: 30'
+  m_Text: 'Enemies: 30'
 --- !u!222 &948254481
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1148,7 +1149,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage: 0.0%'
+  m_Text: 'Health: 0.0%'
 --- !u!222 &1679066085
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1243,7 +1244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9650988208e3a7043bf5a8bb7aac1032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesLeft: 30
   leftText: {fileID: 948254480}
   damageText: {fileID: 1679066084}
   pageText: {fileID: 1652451709}

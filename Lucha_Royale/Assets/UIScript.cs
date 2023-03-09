@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIScript : MonoBehaviour
 {
-    public int enemiesLeft = 30;
+    public static int enemiesLeft = 30;
     public Text leftText;
     public Text damageText;
     public Text pageText;
@@ -30,19 +31,23 @@ public class UIScript : MonoBehaviour
         {
             updateChairCount();
         }
+        if(enemiesLeft == 0){
+            SceneManager.LoadScene("GameOver");
+
+        }
     }
 
     [ContextMenu("Eliminate Enemy")]
     public void eliminated()
     {
         enemiesLeft--;
-        leftText.text = "Left: " + enemiesLeft.ToString();
+        leftText.text = "Enemies: " + enemiesLeft.ToString();
     }
 
     [ContextMenu("Damage Up")]
     public void updateDamageText()
     {
-        damageText.text = "Damage: " + (luchador.damage - 1.0).ToString() + "%";
+        damageText.text = "Health: " + (luchador.damage - 1.0).ToString() + "%";
     }
 
     [ContextMenu("Filling Bar")]

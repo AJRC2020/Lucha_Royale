@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5276876225860733184}
   - component: {fileID: 5276876225860733185}
   - component: {fileID: 5276876225860733186}
+  - component: {fileID: 8485893732252786709}
   m_Layer: 0
   m_Name: Enemy Type 1
   m_TagString: Untagged
@@ -130,3 +131,23 @@ MonoBehaviour:
   wrestler: {fileID: 0}
   ui: {fileID: 0}
   spawner: {fileID: 0}
+--- !u!95 &8485893732252786709
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5276876225860733187}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2b00517e0c5c8874a87cb5acce23be2c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class WrestlerScript : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class WrestlerScript : MonoBehaviour
     public int paper_count = 0;
     public bool isLeft = false;
     public bool isFlying = false;
+    public bool isDamaged = false;
     bool punch = false;
     bool wings = false;
     float timer_wings = 0.0f;
@@ -64,6 +66,11 @@ public class WrestlerScript : MonoBehaviour
                 animator.SetBool("isFlying", false);
                 animator.applyRootMotion = true;
             }
+        }
+
+        if (isDamaged){
+            isDamaged = false;
+            animator.SetBool("isDamaged", false);
         }
 
         if (Input.GetKey(KeyCode.W))
@@ -144,11 +151,15 @@ public class WrestlerScript : MonoBehaviour
             animator.SetBool("isWeapon", false);
             ui.disableChair();
         }
+
+        if (damage == 100.00){
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!punch && collision.gameObject.layer == 0)
+        if (!punch && collision.gameObject.layer == 0 && !isDamaged)
         {
             if (collision.transform.position.x > transform.position.x)
             {
@@ -159,6 +170,8 @@ public class WrestlerScript : MonoBehaviour
                 transform.position += Vector3.right * damage * Time.deltaTime;
             }
             damage += hit;
+            isDamaged = true;
+            animator.SetBool("isDamaged", true);
         }
 
         if (!isFlying) { 
