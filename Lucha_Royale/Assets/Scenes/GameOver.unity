@@ -722,6 +722,8 @@ GameObject:
   - component: {fileID: 2017114401}
   - component: {fileID: 2017114400}
   - component: {fileID: 2017114399}
+  - component: {fileID: 2017114403}
+  - component: {fileID: 2017114402}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -793,7 +795,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2017114400}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2017114403}
+        m_TargetAssemblyTypeName: GameOverScreen, Assembly-CSharp
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2017114400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,3 +846,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017114397}
   m_CullTransparentMesh: 1
+--- !u!114 &2017114402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017114397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626c487e2ce816340aa7ed7119b33809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointsText: {fileID: 0}
+  totalEnemiesDefeated: 0
+--- !u!114 &2017114403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017114397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626c487e2ce816340aa7ed7119b33809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointsText: {fileID: 0}
+  totalEnemiesDefeated: 0

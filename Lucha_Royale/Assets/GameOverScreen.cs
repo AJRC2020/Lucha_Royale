@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class GameOverScreen : MonoBehaviour
     public void updateEnemies(int enemies){
         totalEnemiesDefeated = 30 - enemies;
         pointsText.text = totalEnemiesDefeated.ToString() + " ENEMIES DEFEATED";
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
 
