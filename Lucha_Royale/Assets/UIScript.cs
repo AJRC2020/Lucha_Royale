@@ -47,7 +47,7 @@ public class UIScript : MonoBehaviour
     [ContextMenu("Damage Up")]
     public void updateDamageText()
     {
-        damageText.text = "Health: " + (luchador.damage - 1.0).ToString() + "%";
+        damageText.text = "Health: " + (luchador.damage - 1.0).ToString("N2") + "%";
     }
 
     [ContextMenu("Filling Bar")]

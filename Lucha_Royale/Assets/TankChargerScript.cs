@@ -72,7 +72,7 @@ public class TankChargerScript : MonoBehaviour
             else
             {
                 burning = false;
-                timer = 0.0f;
+                timerBurning = 0.0f;
                 Destroy(currentBurn);
             }
         }
@@ -154,11 +154,16 @@ public class TankChargerScript : MonoBehaviour
                     break;
 
                 case 1:
-                    isStunned = true;
-                    damage += wrestler.power * 3.0f;
-                    wrestler.chair_hits--;
-                    var position = gameObject.transform.position + new Vector3(0, 1.5f, 0);
-                    currentStun = Instantiate(stunEffect, position, gameObject.transform.rotation);
+                    if (wrestler.chair_hits > 0)
+                    {
+                        isStunned = true;
+                        damage += wrestler.power * 3.0f;
+                        wrestler.chair_hits--;
+                        var position = gameObject.transform.position + new Vector3(0, 1.5f, 0);
+                        Destroy(currentStun);
+                        timer = 0.0f;
+                        currentStun = Instantiate(stunEffect, position, gameObject.transform.rotation, gameObject.transform);
+                    }
                     break;
             }
 

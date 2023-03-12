@@ -7,6 +7,8 @@ TagManager:
   - Luchador
   - UI
   - Spawner
+  - Tank
+  - Bull
   layers:
   - Default
   - TransparentFX

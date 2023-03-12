@@ -27,7 +27,7 @@ public class WrestlerScript : MonoBehaviour
     float timer_damaged = 0.0f;
     float damaged_duration = 0.365f;
     float speed = 3.0f;
-    float hit = 0.5f;
+    float mortality = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -173,13 +173,20 @@ public class WrestlerScript : MonoBehaviour
         {
             if (collision.transform.position.x > transform.position.x)
             {
-                transform.position -= Vector3.right * damage * Time.deltaTime;
+                transform.position -= Vector3.right * (damage + 4.0f) * Time.deltaTime;
             }
             else
             {
                 transform.position += Vector3.right * damage * Time.deltaTime;
             }
-            damage += hit;
+            if (collision.gameObject.CompareTag("Tank"))
+            {
+                damage += 2.5f * mortality;
+            }
+            else if (collision.gameObject.CompareTag("Bull"))
+            {
+                damage += 1.0f * mortality;
+            }
             isDamaged = true;
             animator.SetBool("isDamaged", true);
         }
@@ -229,12 +236,12 @@ public class WrestlerScript : MonoBehaviour
 
     private void into_veins()
     {
-        hit /= 2;
-        damage /= 2;
+        damage *= 0.75f;
         if (damage < 1.0f)
         {
             damage = 1.0f;
         }
-        power *= 2;
+        power *= 1.1f;
+        mortality += 0.5f;
     }
 }
