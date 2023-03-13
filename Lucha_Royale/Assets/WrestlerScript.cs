@@ -163,7 +163,7 @@ public class WrestlerScript : MonoBehaviour
         }
 
         if (transform.position.x > 10 || transform.position.x < -10){
-            SceneManager.LoadScene("GameOver");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
