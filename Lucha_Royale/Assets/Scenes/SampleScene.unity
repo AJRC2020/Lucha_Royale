@@ -1187,6 +1187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9650988208e3a7043bf5a8bb7aac1032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesLeft: 30
   leftText: {fileID: 948254480}
   damageText: {fileID: 1679066084}
   pageText: {fileID: 1652451709}

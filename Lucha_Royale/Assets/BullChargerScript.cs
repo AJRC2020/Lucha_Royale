@@ -10,6 +10,7 @@ public class BullChargerScript : MonoBehaviour
     public WrestlerScript wrestler;
     public UIScript ui;
     public EnemySpawner spawner;
+    public Animator enemyAnimation;
     float damage = 10.0f;
     bool gotPunched = false;
     float speed = 0.5f;
@@ -29,6 +30,7 @@ public class BullChargerScript : MonoBehaviour
         wrestler = luchador.GetComponent<WrestlerScript>();
         ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIScript>();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
+        enemyAnimation = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -75,6 +77,14 @@ public class BullChargerScript : MonoBehaviour
                 timerBurning = 0.0f;
                 Destroy(currentBurn);
             }
+        }
+
+        
+        if(damage >= 30.0f && damage < 50.0f){
+            enemyAnimation.SetInteger("damagedLevel", 1);
+        }
+        if(damage >= 50.0f){
+            enemyAnimation.SetInteger("damagedLevel", 2);
         }
     }
 
