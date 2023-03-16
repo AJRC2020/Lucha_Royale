@@ -10,6 +10,7 @@ public class BullChargerScript : MonoBehaviour
     public WrestlerScript wrestler;
     public UIScript ui;
     public EnemySpawner spawner;
+    public Animator enemyAnimation;
     float damage = 10.0f;
     bool gotPunched = false;
     float speed = 0.5f;
@@ -19,6 +20,9 @@ public class BullChargerScript : MonoBehaviour
     bool burning = false;
     float burningDuration = 2.0f;
     float timerBurning = 0.0f;
+    public bool isDamaged = false;
+    float timer_damaged = 0.0f;
+    float damaged_duration = 0.2f;
     GameObject currentBurn;
     GameObject currentStun;
 
@@ -29,6 +33,7 @@ public class BullChargerScript : MonoBehaviour
         wrestler = luchador.GetComponent<WrestlerScript>();
         ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIScript>();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
+        enemyAnimation = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -76,11 +81,32 @@ public class BullChargerScript : MonoBehaviour
                 Destroy(currentBurn);
             }
         }
+
+        if (isDamaged){
+            if (timer_damaged < damaged_duration)
+            {
+                timer_damaged += Time.deltaTime;
+            }
+            else
+            {
+                isDamaged = false;
+                enemyAnimation.SetBool("isDamaged", false);
+                timer_damaged = 0.0f;
+            }
+        }
+
+        
+        if(damage >= 30.0f && damage < 50.0f){
+            enemyAnimation.SetInteger("damagedLevel", 1);
+        }
+        if(damage >= 50.0f){
+            enemyAnimation.SetInteger("damagedLevel", 2);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 11 && !burning)
+        if (collision.gameObject.layer == 11 && !burning && !isDamaged)
         {
             if (collision.transform.position.x > transform.position.x)
             {
@@ -92,9 +118,11 @@ public class BullChargerScript : MonoBehaviour
             }
             damage += 0.5f;
             burning = true;
+            isDamaged = true;
+            enemyAnimation.SetBool("isDamaged", true);
             currentBurn = Instantiate(burningEffect, gameObject.transform.position, new Quaternion(-90, 0, 0, 0), gameObject.transform);
         }
-        else if(collision.gameObject.layer == 12)
+        else if(collision.gameObject.layer == 12 && !isDamaged)
         {
             if (collision.transform.position.x > transform.position.x)
             {
@@ -105,6 +133,8 @@ public class BullChargerScript : MonoBehaviour
                 transform.position += Vector3.right * damage * 100 * Time.deltaTime;
             }
             damage += 100.0f;
+            isDamaged = true;
+            enemyAnimation.SetBool("isDamaged", true);
         }
         else
         {
@@ -137,7 +167,7 @@ public class BullChargerScript : MonoBehaviour
 
     private void gettingPunched(Collider2D collision)
     {
-        if (collision.gameObject.layer == 3 && !gotPunched)
+        if (collision.gameObject.layer == 3 && !gotPunched && !isDamaged)
         {
             switch (wrestler.weapon)
             {
@@ -166,7 +196,8 @@ public class BullChargerScript : MonoBehaviour
                     }
                     break;
             }
-
+            isDamaged = true;
+            enemyAnimation.SetBool("isDamaged", true);
             gotPunched = true;
         }
     }

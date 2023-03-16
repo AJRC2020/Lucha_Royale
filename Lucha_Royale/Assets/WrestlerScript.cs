@@ -20,6 +20,8 @@ public class WrestlerScript : MonoBehaviour
     public bool isDamaged = false;
     bool punch = false;
     bool wings = false;
+    public float punchRate = 0.5f;
+    private float nextPunch = 0.0f;
     float timer_wings = 0.0f;
     float wings_duration = 6.0f;
     float timer_finisher = 0.0f;
@@ -116,8 +118,9 @@ public class WrestlerScript : MonoBehaviour
             animator.SetFloat("Speed", 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && paper_count > 0)
+        if (Input.GetKeyDown(KeyCode.E) && paper_count > 0 && Time.time > nextPunch)
         {
+            nextPunch = Time.time + punchRate;
             var initial = gameObject.transform.position;
             if (isLeft)
             {
@@ -132,8 +135,9 @@ public class WrestlerScript : MonoBehaviour
             paper_count--;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && Time.time > nextPunch)
         {
+            nextPunch = Time.time + punchRate;
             animator.SetBool("isPunching", true);
             gameObject.layer = 3;
             punch = true;
@@ -163,7 +167,7 @@ public class WrestlerScript : MonoBehaviour
         }
 
         if (transform.position.x > 10 || transform.position.x < -10){
-            SceneManager.LoadScene("GameOver");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

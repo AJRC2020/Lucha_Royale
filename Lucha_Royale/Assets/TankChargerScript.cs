@@ -10,6 +10,7 @@ public class TankChargerScript : MonoBehaviour
     public UIScript ui;
     public GameObject burningEffect;
     public GameObject stunEffect;
+    public Animator enemyAnimation;
     float damage = 5.0f;
     bool gotPunched = false;
     float speed = 0.2f;
@@ -19,6 +20,9 @@ public class TankChargerScript : MonoBehaviour
     bool burning = false;
     float burningDuration = 2.0f;
     float timerBurning = 0.0f;
+    public bool isDamaged = false;
+    float timer_damaged = 0.0f;
+    float damaged_duration = 0.2f;
     GameObject currentBurn;
     GameObject currentStun;
 
@@ -29,6 +33,7 @@ public class TankChargerScript : MonoBehaviour
         wrestler = luchador.GetComponent<WrestlerScript>();
         ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIScript>();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
+        enemyAnimation = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -62,6 +67,19 @@ public class TankChargerScript : MonoBehaviour
             }
         }
 
+        if (isDamaged){
+            if (timer_damaged < damaged_duration)
+            {
+                timer_damaged += Time.deltaTime;
+            }
+            else
+            {
+                isDamaged = false;
+                enemyAnimation.SetBool("isDamaged", false);
+                timer_damaged = 0.0f;
+            }
+        }
+
         if (burning)
         {
             if (timerBurning < burningDuration)
@@ -76,11 +94,14 @@ public class TankChargerScript : MonoBehaviour
                 Destroy(currentBurn);
             }
         }
+        if(damage >= 70.0f){
+            enemyAnimation.SetBool("damagedEnemy", true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 11 && !burning)
+        if (collision.gameObject.layer == 11 && !burning && !isDamaged)
         {
             if (collision.transform.position.x > transform.position.x)
             {
@@ -92,9 +113,11 @@ public class TankChargerScript : MonoBehaviour
             }
             damage += 0.5f;
             burning = true;
+            isDamaged = true;
+            enemyAnimation.SetBool("isDamaged", true);
             currentBurn = Instantiate(burningEffect, gameObject.transform.position, new Quaternion(-90, 0, 0, 0), gameObject.transform);
         }
-        else if (collision.gameObject.layer == 12)
+        else if (collision.gameObject.layer == 12 && !isDamaged)
         {
             if (collision.transform.position.x > transform.position.x)
             {
@@ -105,6 +128,8 @@ public class TankChargerScript : MonoBehaviour
                 transform.position -= Vector3.right * damage * 100 * Time.deltaTime;
             }
             damage += 100.0f;
+            isDamaged = true;
+            enemyAnimation.SetBool("isDamaged", true);
         }
         else
         {
@@ -133,11 +158,14 @@ public class TankChargerScript : MonoBehaviour
         {
             gotPunched = false;
         }
+        if (isDamaged){
+            isDamaged = false;
+        }
     }
 
     private void gettingPunched(Collider2D collision)
     {
-        if (collision.gameObject.layer == 3 && !gotPunched)
+        if (collision.gameObject.layer == 3 && !gotPunched && !isDamaged)
         {
             switch (wrestler.weapon)
             {
@@ -166,7 +194,8 @@ public class TankChargerScript : MonoBehaviour
                     }
                     break;
             }
-
+            isDamaged = true;
+            enemyAnimation.SetBool("isDamaged", true);
             gotPunched = true;
         }
     }

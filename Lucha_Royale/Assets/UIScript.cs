@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class UIScript : MonoBehaviour
 {
-    public static int enemiesLeft = 30;
+    public int enemiesLeft = 30;
+    public static int enemiesDefeated;
     public Text leftText;
     public Text damageText;
     public Text pageText;
@@ -24,6 +25,7 @@ public class UIScript : MonoBehaviour
 
     private void Update()
     {
+        enemiesDefeated = enemiesLeft;
         updateDamageText();
         updateProgressBar();
         updatePaperCount();
@@ -32,8 +34,13 @@ public class UIScript : MonoBehaviour
             updateChairCount();
         }
         if(enemiesLeft <= 0){
+<<<<<<< HEAD
             SceneManager.LoadScene("GameOver");
 
+=======
+            enemiesLeft = 30;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+>>>>>>> 5a5e4687fdc8cfc3bb46c1f1d8a9756ea17bb0de
         }
     }
 

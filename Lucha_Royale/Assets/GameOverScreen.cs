@@ -10,7 +10,7 @@ public class GameOverScreen : MonoBehaviour
     public int totalEnemiesDefeated;
 
     private void Update(){
-        updateEnemies(UIScript.enemiesLeft);
+        updateEnemies(UIScript.enemiesDefeated);
     }
 
     public void updateEnemies(int enemies){

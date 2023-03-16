@@ -31,19 +31,19 @@ public class ConsumablesSpawnScript : MonoBehaviour
             Instantiate(roids, position1, transform.rotation);
         }
 
-        if (Random.Range(0, 3000) > 2998)
+        if (Random.Range(0, 2000) > 1998)
         {
             var position2 = new Vector3(Random.Range(-7f, 7f), Random.Range(-3f, 1.75f), 0);
             Instantiate(cheer, position2, transform.rotation);
         }
 
-        if (Random.Range(0, 5000) > 4998)
+        if (Random.Range(0, 3000) > 2998)
         {
             var position2 = new Vector3(Random.Range(-7f, 7f), Random.Range(-3f, 1.75f), 0);
             Instantiate(chair, position2, transform.rotation);
         }
 
-        if (Random.Range(0, 4000) > 3998)
+        if (Random.Range(0, 3000) > 2998)
         {
             var position2 = new Vector3(Random.Range(-7f, 7f), Random.Range(-3f, 1.75f), 0);
             Instantiate(paper, position2, transform.rotation);
