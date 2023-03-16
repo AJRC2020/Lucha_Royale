@@ -33,7 +33,7 @@ public class UIScript : MonoBehaviour
         {
             updateChairCount();
         }
-        if(enemiesLeft == 0){
+        if(enemiesLeft <= 0){
             enemiesLeft = 30;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
