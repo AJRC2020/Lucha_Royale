@@ -31,7 +31,7 @@ public class UIScript : MonoBehaviour
         {
             updateChairCount();
         }
-        if(enemiesLeft == 0){
+        if(enemiesLeft <= 0){
             SceneManager.LoadScene("GameOver");
 
         }
