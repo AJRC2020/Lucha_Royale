@@ -10,6 +10,7 @@ public class TankChargerScript : MonoBehaviour
     public UIScript ui;
     public GameObject burningEffect;
     public GameObject stunEffect;
+    public Animator enemyAnimation;
     float damage = 5.0f;
     bool gotPunched = false;
     float speed = 0.2f;
@@ -29,6 +30,7 @@ public class TankChargerScript : MonoBehaviour
         wrestler = luchador.GetComponent<WrestlerScript>();
         ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UIScript>();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
+        enemyAnimation = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -75,6 +77,9 @@ public class TankChargerScript : MonoBehaviour
                 timerBurning = 0.0f;
                 Destroy(currentBurn);
             }
+        }
+        if(damage >= 70.0f){
+            enemyAnimation.SetBool("damagedEnemy", true);
         }
     }
 

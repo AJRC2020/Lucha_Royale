@@ -80,10 +80,10 @@ public class BullChargerScript : MonoBehaviour
         }
 
         
-        if(damage >= 30.0f && damage < 50.0f){
+        if(damage >= 50.0f && damage < 100.0f){
             enemyAnimation.SetInteger("damagedLevel", 1);
         }
-        if(damage >= 50.0f){
+        if(damage >= 100.0f){
             enemyAnimation.SetInteger("damagedLevel", 2);
         }
     }
