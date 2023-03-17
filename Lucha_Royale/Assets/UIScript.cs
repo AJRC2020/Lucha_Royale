@@ -34,13 +34,8 @@ public class UIScript : MonoBehaviour
             updateChairCount();
         }
         if(enemiesLeft <= 0){
-<<<<<<< HEAD
-            SceneManager.LoadScene("GameOver");
-
-=======
             enemiesLeft = 30;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
->>>>>>> 5a5e4687fdc8cfc3bb46c1f1d8a9756ea17bb0de
         }
     }
 

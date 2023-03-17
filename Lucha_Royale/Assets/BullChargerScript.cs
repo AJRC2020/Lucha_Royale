@@ -119,6 +119,7 @@ public class BullChargerScript : MonoBehaviour
             damage += 0.5f;
             burning = true;
             isDamaged = true;
+            timer_damaged = 0.0f;
             enemyAnimation.SetBool("isDamaged", true);
             currentBurn = Instantiate(burningEffect, gameObject.transform.position, new Quaternion(-90, 0, 0, 0), gameObject.transform);
         }
@@ -134,6 +135,7 @@ public class BullChargerScript : MonoBehaviour
             }
             damage += 100.0f;
             isDamaged = true;
+            timer_damaged = 0.0f;
             enemyAnimation.SetBool("isDamaged", true);
         }
         else
@@ -198,6 +200,7 @@ public class BullChargerScript : MonoBehaviour
             }
             isDamaged = true;
             enemyAnimation.SetBool("isDamaged", true);
+            timer_damaged = 0.0f;
             gotPunched = true;
         }
     }

@@ -114,6 +114,7 @@ public class TankChargerScript : MonoBehaviour
             damage += 0.5f;
             burning = true;
             isDamaged = true;
+            timer_damaged = 0.0f;
             enemyAnimation.SetBool("isDamaged", true);
             currentBurn = Instantiate(burningEffect, gameObject.transform.position, new Quaternion(-90, 0, 0, 0), gameObject.transform);
         }
@@ -129,6 +130,7 @@ public class TankChargerScript : MonoBehaviour
             }
             damage += 100.0f;
             isDamaged = true;
+            timer_damaged = 0.0f;
             enemyAnimation.SetBool("isDamaged", true);
         }
         else
@@ -157,9 +159,6 @@ public class TankChargerScript : MonoBehaviour
         if (gotPunched)
         {
             gotPunched = false;
-        }
-        if (isDamaged){
-            isDamaged = false;
         }
     }
 
@@ -195,6 +194,7 @@ public class TankChargerScript : MonoBehaviour
                     break;
             }
             isDamaged = true;
+            timer_damaged = 0.0f;
             enemyAnimation.SetBool("isDamaged", true);
             gotPunched = true;
         }
